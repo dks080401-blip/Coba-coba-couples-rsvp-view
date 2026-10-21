@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fbf6ef">
+<title>Dashboard Pasangan · Digital Haus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#fbf6ef; --cream2:#f6ede3; --card:#fffdfa; --line:#efdfd9;
+  --wine:#8c2f4b; --wine-d:#6e2038; --dark:#3a1520;
+  --rose:#f3dadd; --rose-d:#a83a56;
+  --green:#e2f1df; --green-d:#2f7a47;
+  --gold:#fbebd0; --gold-d:#a8741a;
+  --ink:#2f1a21; --mute:#8a7078;
+  --shadow:0 1px 2px #6e203810, 0 8px 24px #6e20381a;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--cream);color:var(--ink);font-family:Raleway,system-ui,sans-serif;font-size:15px;line-height:1.45}
+body{background:radial-gradient(900px 400px at 50% -100px,#f6dfe3 0,transparent 70%),var(--cream)}
+h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;margin:0;font-weight:600}
+button,input,select,textarea{font:inherit;color:inherit}
+svg{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.wrap{max-width:520px;margin:0 auto;padding:14px 14px 120px}
+.center{min-height:100vh;display:grid;place-items:center}
+.spin{width:30px;height:30px;border:3px solid var(--line);border-top-color:var(--wine);border-radius:50%;animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* ---------- auth ---------- */
+.auth{max-width:420px;margin:0 auto;padding:60px 22px 40px}
+.seal{width:64px;height:64px;border-radius:50%;background:linear-gradient(145deg,#c99a4d,#9c6f2a);display:grid;place-items:center;color:#fff3d6;font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:700;box-shadow:inset 0 0 0 3px #ffffff40,0 8px 20px #9c6f2a55;margin-bottom:22px}
+.auth h1{font-size:40px;line-height:1.05;color:var(--wine-d)}
+.auth .sub{color:var(--mute);margin:10px 0 26px}
+label{display:block;font-weight:600;font-size:13px;margin:16px 0 6px}
+input,select,textarea{width:100%;padding:14px 15px;border:1px solid var(--line);border-radius:14px;background:#fff;outline:none;transition:border-color .15s,box-shadow .15s}
+input:focus,select:focus,textarea:focus{border-color:var(--wine);box-shadow:0 0 0 4px #8c2f4b1c}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:15px;border:0;border-radius:16px;background:var(--wine);color:#fff;font-weight:700;cursor:pointer;margin-top:22px;box-shadow:0 8px 18px #8c2f4b40}
+.btn:disabled{opacity:.6}
+.btn.ghost{background:#fff;color:var(--wine-d);border:1px solid var(--line);box-shadow:none;margin-top:10px}
+.btn.danger{background:#fff;color:var(--rose-d);border:1px solid #f0c9cf;box-shadow:none;margin-top:10px}
+.btn.sm{width:auto;padding:10px 18px;margin:0;font-size:13px;border-radius:12px}
+.link{background:none;border:0;color:var(--wine);font-weight:700;cursor:pointer;padding:10px 0;margin-top:8px}
+.msg{min-height:20px;margin-top:12px;font-size:13px;color:var(--rose-d)}
+.msg.ok{color:var(--green-d)}
+.hint{font-size:12px;color:var(--mute);margin-top:6px}
+
+/* ---------- cards ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:16px;margin-top:12px;box-shadow:var(--shadow)}
+.head{display:flex;align-items:center;gap:12px}
+.head .ic{width:28px;height:28px;display:grid;place-items:center;color:var(--rose-d);font-size:24px}
+.head .tx{flex:1;min-width:0}
+.head h1{font-size:19px;line-height:1.1;color:var(--ink);font-family:Raleway,sans-serif;font-weight:700;letter-spacing:-.01em}
+.head small{display:block;color:var(--mute);font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rb{width:40px;height:40px;border-radius:50%;border:0;display:grid;place-items:center;font-size:20px;cursor:pointer;background:transparent;color:var(--wine-d)}
+.rb.dark{background:var(--dark);color:#fff}
+
+/* ---------- tiles ---------- */
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px}
+.tile{position:relative;border-radius:22px;padding:12px 11px;min-height:142px;display:flex;flex-direction:column;border:1px solid var(--line);background:var(--card);box-shadow:var(--shadow)}
+.tile .ti{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:14px;margin-bottom:auto}
+.tile b{font-family:Raleway,sans-serif;font-size:34px;font-weight:700;line-height:1;margin-top:14px;letter-spacing:-.02em}
+.tile b.sm{font-size:22px;margin-top:20px;white-space:nowrap}
+.tile .lb{font-size:12px;font-weight:500;margin-top:5px;line-height:1.2}
+.tile .tr{font-size:10px;margin-top:9px;display:flex;align-items:center;gap:3px;opacity:.9}
+.tile.main{background:linear-gradient(160deg,#9a3553,#7b2842);color:#fff;border-color:transparent}
+.tile.main .ti{background:#ffffff30}
+.tile.rose{background:var(--rose);border-color:transparent;color:var(--wine-d)}
+.tile.rose .ti{background:#fff8}
+.tile.gold{background:var(--gold);border-color:transparent;color:var(--gold-d)}
+.tile.gold .ti{background:#fff8}
+.tile.green .ti{background:var(--green);color:var(--green-d)}
+.tile.green .tr{color:var(--green-d)}
+.tile.red .ti{background:var(--rose);color:var(--rose-d)}
+.tile.red .tr{color:var(--rose-d)}
+.tile.plain .ti{background:var(--cream2);color:var(--wine-d)}
+.tile.plain .tr{color:var(--mute)}
+
+/* ---------- link + countdown ---------- */
+.row2{display:flex;align-items:center;gap:12px}
+.row2 .box{width:46px;height:46px;border-radius:14px;background:var(--rose);color:var(--wine-d);display:grid;place-items:center;font-size:22px;flex:none}
+.row2 .t{flex:1;min-width:0}
+.row2 .t small{color:var(--mute);font-size:12px;display:block}
+.row2 .t b{display:block;font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cd{margin-top:12px;border-radius:24px;border:1px solid #e9c9cf;border-top:3px solid var(--wine);background:linear-gradient(#f9e6e8,#f3d5da);padding:16px 12px 14px;text-align:center}
+.cd .ttl{font-size:11px;letter-spacing:.14em;font-weight:700;color:var(--wine);text-transform:uppercase}
+.cd .nums{display:flex;justify-content:center;align-items:flex-start;gap:6px;margin-top:12px}
+.cd .n{width:62px}
+.cd .n i{display:block;font-style:normal;background:#fff;border-radius:12px;padding:10px 0;font-size:24px;font-weight:700;color:var(--dark);box-shadow:0 2px 8px #6e20381f;font-variant-numeric:tabular-nums}
+.cd .n small{display:block;margin-top:6px;font-size:9.5px;letter-spacing:.12em;color:var(--mute);font-weight:600}
+.cd .sep{padding-top:10px;color:var(--wine);font-weight:700;font-size:20px}
+
+/* ---------- guests ---------- */
+.gt{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.gt .gi{width:38px;height:38px;border-radius:12px;background:var(--dark);color:#fff;display:grid;place-items:center;font-size:19px}
+.gt h2{font-family:Raleway,sans-serif;font-size:19px;font-weight:700}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 16px;font-size:13px;font-weight:600;white-space:nowrap;cursor:pointer;color:var(--ink)}
+.chip.on{background:var(--wine);border-color:var(--wine);color:#fff}
+.search{position:relative;margin-top:12px}
+.search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--mute);font-size:18px}
+.search input{padding-left:42px}
+.tools{display:flex;gap:8px;margin:12px 0}
+.sq{width:46px;height:46px;border-radius:14px;border:1px solid var(--line);background:#fff;display:grid;place-items:center;font-size:20px;color:var(--ink);cursor:pointer}
+.sq.fill{background:var(--wine);border-color:var(--wine);color:#fff;box-shadow:0 6px 14px #8c2f4b40}
+.g{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:10px 12px;margin-bottom:9px;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.g.hl{border-color:#e6c56f;box-shadow:0 0 0 3px #f3dc9a55}
+.av{width:38px;height:38px;border-radius:50%;background:var(--rose);color:var(--wine-d);display:grid;place-items:center;font-weight:700;font-size:16px;flex:none}
+.g .nm{flex:1;min-width:0}
+.g .nm b{display:block;font-size:14.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.g .nm small{color:var(--mute);font-size:12px;white-space:nowrap}
+.mini{display:flex;align-items:center;gap:2px;flex:none}
+.mi{width:26px;height:26px;display:grid;place-items:center;font-size:16px;color:var(--ink);background:none;border:0;padding:0;cursor:pointer}
+.mi.chat{background:var(--cream2);border-radius:8px;font-size:14px;color:var(--mute)}
+.mi.del{color:var(--rose-d)}
+.cnt{display:flex;align-items:center;gap:3px;background:var(--rose);color:var(--wine-d);border-radius:999px;padding:3px 8px;font-size:11px;font-weight:700}
+.cnt svg{font-size:12px}
+.st{font-size:11px;font-weight:700;padding:5px 9px;margin-left:4px;border-radius:999px;flex:none}
+.st.y{background:var(--green);color:var(--green-d)}
+.st.n{background:var(--rose);color:var(--rose-d)}
+.empty{text-align:center;color:var(--mute);padding:32px 12px}
+.empty h3{color:var(--wine-d);font-size:24px;margin-bottom:6px}
+
+/* ---------- meals ---------- */
+.bar{margin:16px 0}
+.bar .l{display:flex;justify-content:space-between;font-size:13.5px;font-weight:600;margin-bottom:6px}
+.bar .t{height:12px;background:var(--rose);border-radius:99px;overflow:hidden}
+.bar .t i{display:block;height:100%;background:linear-gradient(90deg,#b34562,var(--wine));border-radius:99px}
+
+/* ---------- bottom nav ---------- */
+nav{position:fixed;left:0;right:0;bottom:calc(14px + env(safe-area-inset-bottom));display:flex;justify-content:center;pointer-events:none;z-index:5}
+nav .in{pointer-events:auto;display:flex;gap:4px;background:var(--dark);padding:6px;border-radius:24px;box-shadow:0 12px 30px #3a152055}
+nav button{border:0;background:none;color:#e9cdd3;padding:9px 18px;border-radius:18px;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}
+nav button svg{font-size:21px}
+nav button.on{background:var(--wine);color:#fff}
+
+/* ---------- sheet ---------- */
+.scrim{position:fixed;inset:0;background:#3a152066;display:flex;align-items:flex-end;justify-content:center;z-index:20;animation:fd .2s}
+.sheet{background:var(--cream);width:100%;max-width:520px;border-radius:28px 28px 0 0;padding:18px 16px calc(22px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto;animation:up .28s cubic-bezier(.2,.8,.2,1)}
+@keyframes up{from{transform:translateY(40px);opacity:.4}}
+@keyframes fd{from{opacity:0}}
+@media (prefers-reduced-motion:reduce){.sheet,.scrim,.toast{animation:none}}
+.sh{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.sh .av{width:56px;height:56px;border-radius:16px;font-size:18px}
+.sh h2{font-size:28px;line-height:1.05}
+.sh .x{margin-left:auto;align-self:flex-start}
+.sh .st{display:inline-block;margin-top:6px}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kv>div,.line{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px}
+.kv small,.line small{display:flex;align-items:center;gap:6px;color:var(--mute);font-size:12px}
+.kv b{display:block;font-size:20px;margin-top:2px}
+.line{margin-top:10px;font-size:14px;word-break:break-word}
+.quote{white-space:pre-wrap}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.radio{display:flex;gap:8px}
+.radio label{flex:1;margin:0;border:1px solid var(--line);border-radius:14px;padding:13px;text-align:center;cursor:pointer;font-weight:600;background:#fff}
+.radio input{display:none}
+.radio label:has(input:checked){border-color:var(--wine);background:var(--rose);color:var(--wine-d)}
+
+/* ---------- toast ---------- */
+.toast{position:fixed;top:12px;left:12px;right:12px;max-width:496px;margin:0 auto;background:#fff;border-radius:18px;padding:12px 14px;display:flex;gap:12px;align-items:center;box-shadow:0 14px 34px #3a152030;z-index:30;animation:dn .35s cubic-bezier(.2,.8,.2,1)}
+.toast .av{background:var(--green);color:var(--green-d);width:36px;height:36px}
+.toast b{display:block;font-size:14px}.toast small{color:var(--mute)}
+@keyframes dn{from{transform:translateY(-30px);opacity:0}}
+:focus-visible{outline:2px solid var(--wine);outline-offset:2px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* ===== Pengaturan ===== */
+const SUPABASE_URL = "https://iasmuancxrlkfxhtacsu.supabase.co";
+const SUPABASE_KEY = "sb_publishable_dj0rFrCFY68xfnYeEnXkOw_wxlTrCoS";
+const INVITE_BASE  = "https://invitation.digitalhaus.online/";
+
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const S = { user:null, event:null, rsvps:[], tab:"home", filter:"all", q:"", hl:null, mode:"login", sheet:null, loading:true };
+
+const P = {
+ mail:'<path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/>',
+ chat:'<path d="M4 5h16v11H9l-5 4z"/>',
+ clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+ ucheck:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-6 6.5-6 1.5 0 2.8.4 3.8 1.1M15 17l2 2 4-4"/>',
+ ux:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-6 6.5-6 1.5 0 2.8.4 3.8 1.1M16 15l5 5M21 15l-5 5"/>',
+ users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-6 6.5-6s6.5 2.5 6.5 6M16 4.5a3.5 3.5 0 010 7M18 14c2 .7 3.5 2.6 3.5 6"/>',
+ cal:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+ search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
+ plus:'<path d="M12 5v14M5 12h14"/>',
+ doc:'<path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h6M9 17h6"/>',
+ pen:'<path d="M4 20l1-4L17 4l3 3L8 19z"/>',
+ trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>',
+ out:'<path d="M9 4H5v16h4M16 8l4 4-4 4M20 12H9"/>',
+ link:'<path d="M10 14a4 4 0 005.6 0l3-3a4 4 0 00-5.6-5.6l-1 1M14 10a4 4 0 00-5.6 0l-3 3a4 4 0 005.6 5.6l1-1"/>',
+ box:'<path d="M12 3l8 4v10l-8 4-8-4V7zM4 7l8 4 8-4M12 11v10"/>',
+ home:'<path d="M3 11l9-8 9 8M5 10v10h14V10"/>',
+ meals:'<path d="M7 3v8a2 2 0 002 2v8M11 3v8M4 3v8a2 2 0 002 2M18 3c-2 2-3 5-3 8h3v10"/>',
+ x:'<path d="M6 6l12 12M18 6L6 18"/>',
+ heart:'<path d="M12 20s-7-4.5-7-10a4 4 0 017-2.5A4 4 0 0119 10c0 5.5-7 10-7 10z"/>',
+ trend:'<path d="M7 17L17 7M9 7h8v8"/>'
+};
+const I = n => `<svg viewBox="0 0 24 24" aria-hidden="true">${P[n]}</svg>`;
+
+function tr(m=""){
+  if(/invalid login/i.test(m)) return "Email atau password salah.";
+  if(/already registered|already been registered/i.test(m)) return "Email ini sudah terdaftar. Silakan masuk.";
+  if(/at least/i.test(m)) return "Password minimal 6 karakter.";
+  if(/valid email|invalid format/i.test(m)) return "Format email belum benar.";
+  if(/rate limit/i.test(m)) return "Terlalu sering mencoba. Tunggu beberapa menit.";
+  if(/not confirmed/i.test(m)) return "Email belum dikonfirmasi. Cek kotak masuk kamu.";
+  return m;
+}
+function setMsg(t, ok){ const e=$("#msg"); if(e){ e.textContent=t||""; e.className="msg"+(ok?" ok":""); } }
+const fmtDate = d => d ? new Date(d+"T00:00:00").toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"}) : "Tanggal belum diisi";
+const shortDate = d => new Date(d).toLocaleDateString("id-ID",{day:"numeric",month:"short"});
+const slugify = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/&/g," ").replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
+const initials = n => (n||"?").trim().split(/\s+/).slice(0,2).map(w=>w[0]).join("").toUpperCase();
+const byId = id => S.rsvps.find(r=>r.id===id);
+
+/* ===== Data ===== */
+async function loadEvent(){
+  const { data, error } = await sb.from("events").select("*").eq("owner_id", S.user.id).order("created_at",{ascending:true}).limit(1).maybeSingle();
+  if(error) console.error(error);
+  S.event = data || null;
+  if(S.event) await loadRsvps();
+  S.loading = false; render();
+}
+async function loadRsvps(){
+  const { data, error } = await sb.from("rsvps").select("*").eq("event_id", S.event.id).order("created_at",{ascending:false});
+  if(error) console.error(error);
+  S.rsvps = data || [];
+}
+async function refresh(){ await loadRsvps(); render(); }
+
+/* cek balasan baru tiap 20 detik */
+setInterval(async ()=>{
+  if(!S.event || document.hidden) return;
+  const old = new Set(S.rsvps.map(r=>r.id));
+  const { data } = await sb.from("rsvps").select("*").eq("event_id", S.event.id).order("created_at",{ascending:false});
+  if(!data) return;
+  const fresh = data.filter(r=>!old.has(r.id));
+  if(!fresh.length && data.length===S.rsvps.length) return;
+  S.rsvps = data;
+  const busy = S.sheet || /INPUT|TEXTAREA/.test(document.activeElement?.tagName||"");
+  if(busy) { if($("#glist")) $("#glist").innerHTML = guestRows(); } else render();
+  if(fresh.length) toast(fresh[0]);
+}, 20000);
+let tt;
+function toast(r){
+  $("#toast").innerHTML = `<div class="toast" role="status"><div class="av">${esc(initials(r.guest_name))}</div><div><b>Balasan baru</b><small>${esc(r.guest_name)} ${r.attending?"akan hadir":"tidak bisa hadir"} · ${r.guest_count||1} orang</small></div></div>`;
+  clearTimeout(tt); tt=setTimeout(()=>$("#toast").innerHTML="",4500);
+}
+
+/* ===== Auth ===== */
+async function doAuth(e){
+  e.preventDefault();
+  const email=$("#email").value.trim(), pw=$("#pw").value, btn=$("#go");
+  setMsg(""); btn.disabled=true;
+  if(S.mode==="login"){
+    const { error } = await sb.auth.signInWithPassword({ email, password:pw });
+    if(error){ setMsg(tr(error.message)); btn.disabled=false; }
+  } else {
+    const { data, error } = await sb.auth.signUp({ email, password:pw });
+    if(error){ setMsg(tr(error.message)); btn.disabled=false; return; }
+    if(!data.session){ setMsg("Akun dibuat. Cek email kamu untuk konfirmasi, lalu masuk.", true); btn.disabled=false; }
+  }
+}
+function toggleMode(){ S.mode = S.mode==="login" ? "signup" : "login"; render(); }
+async function logout(){ await sb.auth.signOut(); }
+
+/* ===== Buat undangan ===== */
+let slugTouched=false;
+function nameInput(){ if(!slugTouched) $("#slug").value = slugify($("#names").value); }
+async function createEvent(e){
+  e.preventDefault();
+  const couple_names=$("#names").value.trim(), slug=slugify($("#slug").value), wedding_date=$("#date").value||null;
+  if(!couple_names||!slug){ setMsg("Nama pasangan dan alamat link wajib diisi."); return; }
+  const btn=$("#go"); btn.disabled=true; setMsg("");
+  const { data, error } = await sb.from("events").insert({ couple_names, slug, wedding_date }).select().single();
+  if(error){ setMsg(error.code==="23505" ? "Alamat link ini sudah dipakai. Coba yang lain." : tr(error.message)); btn.disabled=false; return; }
+  S.event=data; S.rsvps=[]; render();
+}
+
+/* ===== Tamu ===== */
+function openSheet(kind,id){ S.sheet={kind,id}; if(id) S.hl=id; render(); }
+function closeSheet(){ S.sheet=null; render(); }
+async function saveGuest(e){
+  e.preventDefault();
+  const f=e.target, btn=$("#go2"), id=S.sheet.id; btn.disabled=true; setMsg("");
+  const row = {
+    guest_name:f.gname.value.trim(),
+    email:f.gemail.value.trim()||null,
+    attending:f.att.value==="yes",
+    guest_count:Math.max(1,parseInt(f.gcount.value)||1),
+    meal:f.gmeal.value.trim()||null,
+    message:f.gmsg.value.trim()||null
+  };
+  const { error } = id ? await sb.from("rsvps").update(row).eq("id",id)
+                       : await sb.from("rsvps").insert({ event_id:S.event.id, ...row });
+  if(error){ setMsg(tr(error.message)); btn.disabled=false; return; }
+  S.sheet=null; await refresh();
+}
+async function delGuest(id){
+  if(!confirm("Hapus tamu ini dari daftar?")) return;
+  const { error } = await sb.from("rsvps").delete().eq("id", id);
+  if(error){ alert(tr(error.message)); return; }
+  S.sheet=null; S.hl=null; await refresh();
+}
+async function addSamples(){
+  const rows=[
+    {guest_name:"Sarah Martin",email:"sarah@example.com",attending:true,guest_count:2,meal:"Vegetarian",message:"Selamat ya! Tidak sabar hadir."},
+    {guest_name:"Lucas Laurent",attending:true,guest_count:2,meal:"Daging"},
+    {guest_name:"Arthur Sterling",email:"arthur@example.com",attending:true,guest_count:3,meal:"Menu anak",message:"Terima kasih undangannya."},
+    {guest_name:"Elena Rostova",attending:true,guest_count:1,meal:"Vegetarian"},
+    {guest_name:"Sophia Dupont",attending:true,guest_count:2,meal:"Vegan"},
+    {guest_name:"Daniel Cohen",attending:false,guest_count:1,message:"Maaf, tidak bisa hadir. Salam untuk kalian!"}
+  ].map(r=>({event_id:S.event.id,...r}));
+  const { error } = await sb.from("rsvps").insert(rows);
+  if(error){ alert(tr(error.message)); return; }
+  await refresh();
+}
+function copyLink(){
+  const link = INVITE_BASE + S.event.slug;
+  const done=()=>{ const b=$("#cp"); if(b){ const o=b.innerHTML; b.textContent="Tersalin"; setTimeout(()=>b.innerHTML=o,1500);} };
+  if(navigator.clipboard) navigator.clipboard.writeText(link).then(done,()=>prompt("Salin link ini:",link));
+  else prompt("Salin link ini:",link);
+}
+function exportCsv(){
+  const safe = v => { v=String(v??""); if(/^[=+\-@]/.test(v)) v="'"+v; return '"'+v.replace(/"/g,'""')+'"'; };
+  const head=["Nama","Status","Jumlah orang","Menu","Email","Pesan","Dikirim"];
+  const rows=S.rsvps.map(r=>[r.guest_name,r.attending?"Hadir":"Tidak hadir",r.guest_count,r.meal,r.email,r.message,r.created_at].map(safe).join(","));
+  const blob=new Blob(["\ufeff"+[head.map(safe).join(","),...rows].join("\n")],{type:"text/csv;charset=utf-8"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=(S.event.slug||"tamu")+"-rsvp.csv"; a.click();
+}
+
+/* ===== Tampilan ===== */
+function authView(){
+  const login = S.mode==="login";
+  return `<div class="auth">
+    <div class="seal">D</div>
+    <h1>${login?"Selamat datang kembali":"Buat akun pasangan"}</h1>
+    <p class="sub">${login?"Masuk untuk melihat siapa saja yang sudah membalas undangan kalian.":"Daftar sekali, lalu kelola undangan dan daftar tamu dari sini."}</p>
+    <form onsubmit="doAuth(event)">
+      <label for="email">Email</label>
+      <input id="email" type="email" autocomplete="email" required>
+      <label for="pw">Password</label>
+      <input id="pw" type="password" minlength="6" autocomplete="${login?"current-password":"new-password"}" required>
+      <div id="msg" class="msg" role="alert"></div>
+      <button id="go" class="btn" type="submit">${login?"Masuk":"Buat akun"}</button>
+    </form>
+    <button class="link" onclick="toggleMode()">${login?"Belum punya akun? Daftar":"Sudah punya akun? Masuk"}</button>
+  </div>`;
+}
+function setupView(){
+  return `<div class="auth">
+    <div class="seal">D</div>
+    <h1>Siapkan undangan kalian</h1>
+    <p class="sub">Tiga data ini cukup untuk mulai. Semuanya bisa diubah nanti.</p>
+    <form onsubmit="createEvent(event)">
+      <label for="names">Nama pasangan</label>
+      <input id="names" placeholder="Elina &amp; David" oninput="nameInput()" required>
+      <label for="date">Tanggal acara</label>
+      <input id="date" type="date">
+      <label for="slug">Alamat link undangan</label>
+      <input id="slug" placeholder="elina-david" oninput="slugTouched=true" required>
+      <div class="hint">Link tamu: ${esc(INVITE_BASE)}<b>alamat-ini</b></div>
+      <div id="msg" class="msg" role="alert"></div>
+      <button id="go" class="btn" type="submit">Buat undangan</button>
+    </form>
+    <button class="link" onclick="logout()">Keluar</button>
+  </div>`;
+}
+function stats(){
+  const yes=S.rsvps.filter(r=>r.attending), no=S.rsvps.filter(r=>!r.attending);
+  const heads=yes.reduce((a,r)=>a+(r.guest_count||1),0);
+  const total=S.rsvps.length;
+  return { total, yes:yes.length, no:no.length, heads, yesList:yes,
+    pYes: total?Math.round(yes.length/total*100):0, pNo: total?Math.round(no.length/total*100):0,
+    avg: yes.length?(heads/yes.length).toFixed(1):"0" };
+}
+function header(){
+  const ev=S.event;
+  return `<div class="card head" style="margin-top:0">
+    <div class="ic">${I("mail")}</div>
+    <div class="tx"><h1>Halo, ${esc(ev.couple_names)}</h1><small>${esc(fmtDate(ev.wedding_date))}</small></div>
+    <button class="rb" onclick="copyLink()" aria-label="Salin link undangan">${I("link")}</button>
+    <button class="rb dark" onclick="logout()" aria-label="Keluar">${I("out")}</button>
+  </div>`;
+}
+function homeTab(){
+  const st=stats(), ev=S.event;
+  const last = S.rsvps[0] ? shortDate(S.rsvps[0].created_at) : "-";
+  const tile=(cls,ic,num,lb,tr_)=>`<div class="tile ${cls}"><div class="ti">${I(ic)}</div><b>${num}</b><div class="lb">${lb}</div><div class="tr">${tr_}</div></div>`;
+  return `<div class="tiles">
+      ${tile("main","chat",st.total,"Balasan masuk",`${I("trend")} terakhir ${last}`)}
+      ${tile("rose","ucheck",st.yes,"Akan hadir",`${I("trend")} ${st.pYes}% dari balasan`)}
+      ${tile("gold","ux",st.no,"Tidak hadir",`${I("trend")} ${st.pNo}% dari balasan`)}
+    </div>
+    <div class="tiles" style="margin-top:9px">
+      ${tile("green","users",st.heads,"Total tamu hadir",`${I("trend")} semua pendamping`)}
+      ${tile("plain","users",st.avg,"Rata-rata",`${I("trend")} orang per balasan`)}
+      ${tile("red","clock",S.rsvps.length?`<span class="sm" style="font-size:20px;white-space:nowrap">${shortDate(S.rsvps[S.rsvps.length-1].created_at)}</span>`:"-","Balasan pertama",`${I("trend")} sejak undangan`)}
+    </div>
+    <div class="card row2" style="cursor:pointer" onclick="copyLink()">
+      <div class="box">${I("box")}</div>
+      <div class="t"><small>Link undangan tamu</small><b>${esc(INVITE_BASE+ev.slug)}</b></div>
+      <button id="cp" class="btn sm" onclick="event.stopPropagation();copyLink()">${I("link")} Salin</button>
+    </div>
+    ${ev.wedding_date?`<div class="cd"><div class="ttl">${I("heart")} Menuju hari bahagia ${I("heart")}</div><div class="nums" id="cd"></div></div>`:""}
+    ${S.rsvps.length?"":`<div class="card empty"><h3>Belum ada balasan</h3>Bagikan link undangan, atau isi data contoh untuk mencoba dashboard.<br><button class="btn sm" style="margin-top:16px" onclick="addSamples()">Isi data contoh</button></div>`}`;
+}
+function tickCountdown(){
+  const el=$("#cd"); if(!el||!S.event?.wedding_date) return;
+  let ms=new Date(S.event.wedding_date+"T00:00:00")-new Date();
+  if(ms<=0){ el.innerHTML=`<b style="font-size:18px;color:var(--wine-d)">Hari ini hari bahagia kalian</b>`; return; }
+  const d=Math.floor(ms/864e5), h=Math.floor(ms%864e5/36e5), m=Math.floor(ms%36e5/6e4), s=Math.floor(ms%6e4/1e3);
+  const b=(v,l)=>`<div class="n"><i>${String(v).padStart(2,"0")}</i><small>${l}</small></div>`;
+  el.innerHTML=b(d,"HARI")+'<div class="sep">:</div>'+b(h,"JAM")+'<div class="sep">:</div>'+b(m,"MENIT")+'<div class="sep">:</div>'+b(s,"DETIK");
+}
+setInterval(tickCountdown,1000);
+
+function guestRows(){
+  let list=S.rsvps;
+  if(S.filter==="yes") list=list.filter(r=>r.attending);
+  if(S.filter==="no") list=list.filter(r=>!r.attending);
+  if(S.q) list=list.filter(r=>r.guest_name.toLowerCase().includes(S.q.toLowerCase()));
+  if(!list.length) return `<div class="empty"><h3>${S.rsvps.length?"Tidak ada yang cocok":"Daftar tamu masih kosong"}</h3>${S.rsvps.length?"Coba ubah filter atau kata pencarian.":"Tekan tombol + untuk menambah tamu."}</div>`;
+  return list.map(r=>`<div class="g ${S.hl===r.id?"hl":""}" onclick="openSheet('view','${r.id}')">
+      <div class="av">${esc(initials(r.guest_name))}</div>
+      <div class="nm"><b>${esc(r.guest_name)}</b><small>${r.guest_count||1} tamu</small></div>
+      <div class="mini">
+        ${r.message?`<span class="mi" style="color:var(--mute)">${I("chat")}</span>`:""}
+        <button class="mi" aria-label="Ubah" onclick="event.stopPropagation();openSheet('edit','${r.id}')">${I("pen")}</button>
+        <button class="mi del" aria-label="Hapus" onclick="event.stopPropagation();delGuest('${r.id}')">${I("trash")}</button>
+      </div>
+      <span class="st ${r.attending?"y":"n"}">${r.attending?"Hadir":"Tidak"}</span>
+    </div>`).join("");
+}
+function guestsTab(){
+  const st=stats();
+  const c=(k,l,n)=>`<button class="chip ${S.filter===k?"on":""}" onclick="setFilter('${k}')">${l} (${n})</button>`;
+  return `<div class="card">
+    <div class="gt"><div class="gi">${I("users")}</div><h2>Balasan tamu</h2></div>
+    <div class="chips">${c("all","Semua",st.total)}${c("yes","Hadir",st.yes)}${c("no","Tidak hadir",st.no)}</div>
+    <div class="search">${I("search")}<input id="q" type="search" placeholder="Cari nama tamu" value="${esc(S.q)}" oninput="S.q=this.value;$('#glist').innerHTML=guestRows()"></div>
+    <div class="tools"><button class="sq fill" onclick="openSheet('edit')" aria-label="Tambah tamu">${I("plus")}</button><button class="sq" onclick="exportCsv()" aria-label="Unduh CSV">${I("doc")}</button></div>
+    <div id="glist">${guestRows()}</div>
+  </div>`;
+}
+function mealsTab(){
+  const st=stats(), map={};
+  st.yesList.forEach(r=>{ const k=(r.meal||"").trim()||"Belum memilih"; map[k]=(map[k]||0)+(r.guest_count||1); });
+  const entries=Object.entries(map).sort((a,b)=>b[1]-a[1]);
+  const max=Math.max(1,...entries.map(e=>e[1]));
+  return `<div class="card"><div class="gt"><div class="gi">${I("meals")}</div><h2>Pilihan menu</h2></div>
+    ${entries.length?entries.map(([k,v])=>`<div class="bar"><div class="l"><span>${esc(k)}</span><span>${v} porsi</span></div><div class="t"><i style="width:${v/max*100}%"></i></div></div>`).join(""):`<div class="empty">Belum ada tamu hadir yang memilih menu.</div>`}
+  </div>`;
+}
+function sheetView(){
+  const {kind,id}=S.sheet, r=id?byId(id):null;
+  if(id && !r) return "";
+  if(kind==="view"){
+    return `<div class="scrim" onclick="if(event.target===this)closeSheet()"><div class="sheet" role="dialog" aria-label="Detail tamu">
+      <div class="sh"><div class="av">${esc(initials(r.guest_name))}</div>
+        <div><h2>${esc(r.guest_name)}</h2><span class="st ${r.attending?"y":"n"}">${r.attending?"Akan hadir":"Tidak hadir"}</span></div>
+        <button class="rb x" onclick="closeSheet()" aria-label="Tutup">${I("x")}</button></div>
+      <div class="kv"><div><small>${I("users")} Jumlah tamu</small><b>${r.guest_count||1}</b></div>
+        <div><small>${I("cal")} Dikirim</small><b>${shortDate(r.created_at)}</b></div></div>
+      ${r.email?`<div class="line"><small>${I("mail")} Email</small>${esc(r.email)}</div>`:""}
+      ${r.meal?`<div class="line"><small>${I("meals")} Menu</small>${esc(r.meal)}</div>`:""}
+      ${r.message?`<div class="line"><small>${I("chat")} Pesan untuk kalian</small><div class="quote">${esc(r.message)}</div></div>`:""}
+      <button class="btn" onclick="openSheet('edit','${r.id}')">${I("pen")} Ubah</button>
+      <button class="btn danger" onclick="delGuest('${r.id}')">${I("trash")} Hapus</button>
+    </div></div>`;
+  }
+  const v=r||{guest_name:"",attending:true,guest_count:1,meal:"",email:"",message:""};
+  return `<div class="scrim" onclick="if(event.target===this)closeSheet()"><form class="sheet" onsubmit="saveGuest(event)">
+    <div class="sh"><div><h2>${r?"Ubah tamu":"Tambah tamu"}</h2><div class="hint" style="margin:0">${r?"Perbarui data balasan tamu.":"Untuk tamu yang membalas lewat chat atau telepon."}</div></div>
+      <button type="button" class="rb x" onclick="closeSheet()" aria-label="Tutup">${I("x")}</button></div>
+    <label for="gname" style="margin-top:0">Nama tamu</label><input id="gname" name="gname" value="${esc(v.guest_name)}" required>
+    <label>Kehadiran</label>
+    <div class="radio"><label><input type="radio" name="att" value="yes" ${v.attending?"checked":""}><span>Hadir</span></label><label><input type="radio" name="att" value="no" ${v.attending?"":"checked"}><span>Tidak hadir</span></label></div>
+    <div class="two"><div><label for="gcount">Jumlah orang</label><input id="gcount" name="gcount" type="number" min="1" value="${v.guest_count||1}"></div>
+    <div><label for="gmeal">Menu</label><input id="gmeal" name="gmeal" value="${esc(v.meal)}" placeholder="Opsional"></div></div>
+    <label for="gemail">Email</label><input id="gemail" name="gemail" type="email" value="${esc(v.email)}" placeholder="Opsional">
+    <label for="gmsg">Pesan</label><textarea id="gmsg" name="gmsg" rows="2" placeholder="Opsional">${esc(v.message)}</textarea>
+    <div id="msg" class="msg" role="alert"></div>
+    <button id="go2" class="btn" type="submit">Simpan</button>
+    <button type="button" class="btn ghost" onclick="closeSheet()">Batal</button>
+  </form></div>`;
+}
+function dashView(){
+  const body = S.tab==="home"?homeTab():S.tab==="guests"?guestsTab():mealsTab();
+  const nav=(k,l)=>`<button class="${S.tab===k?"on":""}" onclick="go('${k}')">${I(k==="guests"?"users":k)}${l}</button>`;
+  return `<div class="wrap">${header()}${body}</div>
+  <nav><div class="in">${nav("home","Ringkasan")}${nav("guests","Tamu")}${nav("meals","Menu")}</div></nav>
+  ${S.sheet?sheetView():""}`;
+}
+function go(tab){ S.tab=tab; if(tab!=="guests"){S.filter="all";S.q="";} render(); window.scrollTo(0,0); }
+function setFilter(f){ S.filter=f; render(); }
+
+function render(){
+  const app=$("#app");
+  if(S.loading){ app.innerHTML=`<div class="center"><div class="spin" role="status" aria-label="Memuat"></div></div>`; return; }
+  if(!S.user) app.innerHTML=authView();
+  else if(!S.event) app.innerHTML=setupView();
+  else { app.innerHTML=dashView(); tickCountdown(); }
+}
+
+/* ===== Mulai ===== */
+sb.auth.onAuthStateChange((evt, session)=>{
+  if(evt==="SIGNED_OUT" || !session){ S.user=null; S.event=null; S.rsvps=[]; S.loading=false; render(); return; }
+  if(evt==="INITIAL_SESSION" || evt==="SIGNED_IN"){
+    if(S.user && S.user.id===session.user.id) return;
+    S.user=session.user; S.loading=true; render();
+    setTimeout(loadEvent,0);
+  }
+});
+render();
+</script>
+</body>
+</html>
